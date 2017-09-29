@@ -1,0 +1,5 @@
+*.pdb
+*.txt
+individual_lists/
+*.sbatch
+*.pyc
