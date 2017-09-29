@@ -1,5 +1,5 @@
 *.pdb
-*.txt
+individual_list.txt
 individual_lists/
 *.sbatch
 *.pyc
