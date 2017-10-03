@@ -1,4 +1,4 @@
-#! /usr/bin/python3.5
+#!/usr/bin/python3.5
 # This part should string all the functions together
 import subprocess
 from pdb_parse import pdb_parse
@@ -29,9 +29,12 @@ total_number_of_lists, hep_hop = individual_lister(protein_chains, protein_chain
 # and then call a shell command to run it
 name_of_sbatch_file = sbatcher(name_of_repaired)
 
-sbatch_call = subprocess.Popen('sbatch ' + name_of_sbatch_file, stdout=subprocess.PIPE)
+sbatch_call = subprocess.Popen('sbatch ' + name_of_sbatch_file, stdout=subprocess.PIPE, shell=True)
+# this will give us standard out from the sbatch submission
 sbatch_process_ID_info = sbatch_call.communicate()
-sbatch_process_ID = sbatch_process_ID_info.split()[4]
+print('sbatch stuff', sbatch_process_ID_info)
+# this is where the process Id is, you will have to trust me on that.
+sbatch_process_ID = str(sbatch_process_ID_info[0]).split()[3][0:-3]
 print('the sbatch process id is', sbatch_process_ID)
 
 # collect scores and build a matrix
@@ -43,6 +46,6 @@ print('the sbatch process id is', sbatch_process_ID)
 # makes it easy to leave as a seperate part
 
 # put a python function call inside precedurally generated python script
-srun_command = 'srun --dependency-afterany:' + sbatch_process_ID + ' somebash.sh'
+srun_command = 'srun --dependency=afterany:' + sbatch_process_ID + ' somebash.bash'
 subprocess.Popen(srun_command, shell=True)
 # score_collect(name_of_repaired='4ins_Repair', number_of_lists=total_number_of_lists)

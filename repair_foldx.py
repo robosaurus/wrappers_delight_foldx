@@ -7,15 +7,16 @@ def repair_foldx(pdb_name, path_to_foldx='/groups/sbinlab/software/foldx_Jan17/'
     # watch the spaces!
     the_call = ('srun '
                 + foldx_path
-                + 'foldx -c RepairPDB --pdb=' + pdb_name
-                + ' --rotabaseLocation=' + foldx_path + 'rotabase.txt'
+                + '/foldx -c RepairPDB --pdb=' + pdb_name
+                + ' --rotabaseLocation=' + foldx_path + '/rotabase.txt'
                 + ' &> repairlog.log')
 
     print('calling to the shell:')
     print(the_call)
     # this is the shell command for srunning foldx repair pdb
     print('\n repairing... this is going to take some minutes')
-    srun_process = subprocess.call(the_call, shell=True)
+    srun_process = subprocess.Popen(the_call, shell=True)
+    # wait for it to finish, we need the repair to continue
     srun_process.communicate()
 
     name_of_repaired = pdb_name[0:-4] + '_Repair.pdb'
