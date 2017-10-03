@@ -147,4 +147,5 @@ def individual_lister(protein_chains, protein_chains_residue_number_list, hep_ho
                 current_list_size = 0
 
     individual_list.close()
-    return hep_hop
+    # return the number of total number of lists, and hep_hop (chain scheme)
+    return current_list_number, hep_hop
