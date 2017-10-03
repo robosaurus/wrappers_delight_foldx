@@ -2,9 +2,11 @@
 
 # this function is part of wrappers_delight for foldx
 
-def score_collect(name_of_repaired='4ins_Repair', path_to_output='./output/', muts_per_list=5):
+def score_collect(name_of_repaired='4ins_Repair', path_to_output='./output/'):
+    # this is a function for looping through the output folder and collect all the ddg scores
+    # it returns a list, of all the ddgs
 
-    # this list is going to hold all of the ddgs
+    # this is the list that will hold all of the ddgs
     all_ddg_scores = []
     for list_number in range(1 ,206):
         # each folder will contain the results for a number of runs
