@@ -15,7 +15,8 @@ def repair_foldx(pdb_name, path_to_foldx='/groups/sbinlab/software/foldx_Jan17/'
     print(the_call)
     # this is the shell command for srunning foldx repair pdb
     print('\n repairing... this is going to take some minutes')
-    subprocess.call(the_call, shell=True)
+    srun_process = subprocess.call(the_call, shell=True)
+    srun_process.communicate()
 
     name_of_repaired = pdb_name[0:-4] + '_Repair.pdb'
     print('the name of the repaired pdb is ', name_of_repaired)

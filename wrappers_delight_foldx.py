@@ -3,9 +3,9 @@
 import subprocess
 from pdb_parse import pdb_parse
 from individual_list_generater import individual_lister
-from repair_foldx.py import repair_foldx
-from score_collect.py import score_collect
-from sbatch_generater.py import sbatcher
+from repair_foldx import repair_foldx
+from score_collect import score_collect
+from sbatch_generater import sbatcher
 # this is the path to foldx
 foldx_path = '/groups/sbinlab/software/foldx_Jan17'
 
@@ -45,4 +45,4 @@ print('the sbatch process id is', sbatch_process_ID)
 # put a python function call inside precedurally generated python script
 srun_command = 'srun --dependency-afterany:' + sbatch_process_ID + ' somebash.sh'
 subprocess.Popen(srun_command, shell=True)
-#score_collect(name_of_repaired='4ins_Repair', number_of_lists=total_number_of_lists)
+# score_collect(name_of_repaired='4ins_Repair', number_of_lists=total_number_of_lists)
