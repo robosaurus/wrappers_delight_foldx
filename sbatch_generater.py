@@ -38,6 +38,4 @@ mkdir output/$CURRENT_LIST
 {}/foldx --command=BuildModel --rotabaseLocation={}/rotabase.txt --pdb={} --mutant-file=${{LST[$INDEX]}} --numberOfRuns=1 --output-dir=output/$CURRENT_LIST
     '''.format(number_of_files, path_to_foldx, path_to_foldx, repaired_pdb))
     sbatch.close()
-
-
-sbatcher('4ins_Repair.pdb')
+    return('foldx_saturation_mutagenesis.sbatch')

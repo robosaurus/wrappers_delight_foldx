@@ -43,5 +43,3 @@ def score_collect(name_of_repaired='4ins_Repair', path_to_output='./output/', nu
                 all_ddg_scores.append(ddg)
 
     return all_ddg_scores
-
-score_collect()
