@@ -42,4 +42,24 @@ def score_collect(number_of_lists, name_of_repaired='4ins_Repair', path_to_outpu
                 # and we can simply append it to the list of all_ddgs
                 all_ddg_scores.append(ddg)
 
-    return all_ddg_scores
+    print(len(all_ddg_scores))
+    # the total number of residues is the length of the all ddgs list,
+    # divided by 20, saturation remember :>
+    number_of_residues = int(len(all_ddg_scores)/20)
+    print('number of residues is', number_of_residues)
+    # now we build the output matrix
+    matrix_file = open('./ddgs_'+name_of_repaired+'.ddg', 'w')
+    # this is AA number, and it will run throught the same list as we used during
+    # individual list generation
+    ddg_line = '{:.4f}\t'*20
+    commaseparated_ddgs = ''
+    for residuenumber in range(1, number_of_residues):
+
+        for ddg_number in range(residuenumber * 20 - 20, residuenumber * 20):
+            commaseparated_ddgs += commaseparated_ddgs + all_ddg_scores[ddg_number]
+
+        matrix_file.write(str(residuenumber) + '\t' + ddg_line.format(commaseparated_ddgs))
+
+    matrix_file.close()
+
+score_collect(206)
