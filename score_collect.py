@@ -2,7 +2,7 @@
 
 # this function is part of wrappers_delight for foldx
 
-def score_collect(number_of_lists, name_of_repaired='4ins_Repair', path_to_output='./output/'):
+def score_collect(number_of_lists, residue_dictionary=None, name_of_repaired='4ins_Repair', path_to_output='./output/'):
     """this is a function for looping through the output folder and collect all the ddg scores
      it returns a list, of all the ddgs"""
 
@@ -40,7 +40,7 @@ def score_collect(number_of_lists, name_of_repaired='4ins_Repair', path_to_outpu
                 # since files are read from the top, and the range is specified
                 # as from 1 to whatever, the ddgs will be read sequentially
                 # and we can simply append it to the list of all_ddgs
-                all_ddg_scores.append(ddg)
+                all_ddg_scores.append(float(ddg))
 
     print(len(all_ddg_scores))
     # the total number of residues is the length of the all ddgs list,
@@ -48,17 +48,26 @@ def score_collect(number_of_lists, name_of_repaired='4ins_Repair', path_to_outpu
     number_of_residues = int(len(all_ddg_scores)/20)
     print('number of residues is', number_of_residues)
     # now we build the output matrix
-    matrix_file = open('./ddgs_'+name_of_repaired+'.ddg', 'w')
+    matrix_file = open('./ddgs_' + name_of_repaired+ '.ddg', 'w')
+    # First let us write a header. That should contain the name of the structure
+    # and a key for intrepreting the residue indices. This will use the residue_dictionary
+    residue_dictionary = {'AC': '1 to 40',
+                          'BE': '40 to 80'}
+    if residue_dictionary:
+        matrix_file.write('# foldx ddg predictions on structure ' + name_of_repaired + '\n')
+        matrix_file.write('# residue index key:\n')
+        for key in residue_dictionary:
+            matrix_file.write('# {:s} is chain(s) {:s}\n'.format(residue_dictionary[key], key))
+    # and lastly of course the title of the coloumns.
+
+    matrix_file.write('index\tA\ttherestsomeother\n')
     # this is AA number, and it will run throught the same list as we used during
     # individual list generation
-    ddg_line = '{:.4f}\t'*20
-    commaseparated_ddgs = ''
+    ddg_line = '{:.4f}\t'*20 + '\n'
     for residuenumber in range(1, number_of_residues):
-
-        for ddg_number in range(residuenumber * 20 - 20, residuenumber * 20):
-            commaseparated_ddgs += commaseparated_ddgs + all_ddg_scores[ddg_number]
-
-        matrix_file.write(str(residuenumber) + '\t' + ddg_line.format(commaseparated_ddgs))
+        start_index = (residuenumber * 20) - 20
+        end_index = (residuenumber*20)
+        matrix_file.write(str(residuenumber) + '\t' + ddg_line.format(*all_ddg_scores[start_index:end_index]))
 
     matrix_file.close()
 
