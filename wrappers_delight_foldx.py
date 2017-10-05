@@ -48,4 +48,4 @@ print('the sbatch process id is', sbatch_process_ID)
 # put a python function call inside precedurally generated python script
 srun_command = 'srun --dependency=afterany:' + sbatch_process_ID + ' somebash.bash'
 subprocess.Popen(srun_command, shell=True)
-score_collect(name_of_repaired='4ins_Repair', number_of_lists=total_number_of_lists, residue_index_chains_dict)
+score_collect(name_of_repaired='4ins_Repair', number_of_lists=total_number_of_lists, residue_dictionary=residue_index_chains_dict)
