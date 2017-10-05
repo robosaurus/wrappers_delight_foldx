@@ -50,17 +50,18 @@ def score_collect(number_of_lists, residue_dictionary=None, name_of_repaired='4i
     # now we build the output matrix
     matrix_file = open('./ddgs_' + name_of_repaired+ '.ddg', 'w')
     # First let us write a header. That should contain the name of the structure
+    matrix_file.write('# foldx ddg predictions on structure ' + name_of_repaired + '\n')
     # and a key for intrepreting the residue indices. This will use the residue_dictionary
-    residue_dictionary = {'AC': '1 to 40',
-                          'BE': '40 to 80'}
     if residue_dictionary:
-        matrix_file.write('# foldx ddg predictions on structure ' + name_of_repaired + '\n')
         matrix_file.write('# residue index key:\n')
         for key in residue_dictionary:
             matrix_file.write('# {:s} is chain(s) {:s}\n'.format(residue_dictionary[key], key))
-    # and lastly of course the title of the coloumns.
+    # and lastly of course the title on the coloumns.
+    header_line = 'index'
+    for element in 'ACDEFGHIKLMNPQRSTVWY':
+        header_line = header_line + '\t' + element
+    matrix_file.write(header_line)
 
-    matrix_file.write('index\tA\ttherestsomeother\n')
     # this is AA number, and it will run throught the same list as we used during
     # individual list generation
     ddg_line = '{:.4f}\t'*20 + '\n'
