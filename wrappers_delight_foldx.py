@@ -22,7 +22,7 @@ for chain in protein_chains:
           protein_chains_residue_numbers[chain][-1])
 
 # generate mutfiles (the old format!)
-total_number_of_lists, hep_hop, residue_index_chains_dict = individual_lister(protein_chains, protein_chains_residue_numbers, hep_hop='AC_BD')
+total_number_of_lists, hep_hop, residue_index_string = individual_lister(protein_chains, protein_chains_residue_numbers, hep_hop='AC_BD')
 
 # submit the jobs to slurm
 # the best way to do this, is probably to generate an sbatch-file.
@@ -46,6 +46,12 @@ print('the sbatch process id is', sbatch_process_ID)
 # makes it easy to leave as a seperate part
 
 # put a python function call inside precedurally generated python script
-srun_command = 'srun --dependency=afterany:' + sbatch_process_ID + ' somebash.bash'
+#
+score_call_bash = open('./score_bash.bash', 'w')
+score_bash_string = '''#!/usr/bin/bash
+# This bash script is procedurally generated and launches the score collect python function
+python3 score_collect.py {} {} {}'''.format(total_number_of_lists, name_of_repaired, residue_index_string)
+score_call_bash.write(score_bash_string)
+score_call_bash.close()
+srun_command = 'srun --dependency=afterany:' + sbatch_process_ID + 'score_bash.bash'
 subprocess.Popen(srun_command, shell=True)
-score_collect(name_of_repaired='4ins_Repair', number_of_lists=total_number_of_lists, residue_dictionary=residue_index_chains_dict)

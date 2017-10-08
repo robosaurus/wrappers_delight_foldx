@@ -1,8 +1,13 @@
 #!/usr/bin/python3
+import sys
 
 # this function is part of wrappers_delight for foldx
+# i am going to put some things here in the beginning, so you can call it from the shell
+number_of_listos = sys.argv[1]
+name_of_repairod = sys.argv[2]
+index_strong = sys.argv[3]
 
-def score_collect(number_of_lists, residue_dictionary=None, name_of_repaired='4ins_Repair', path_to_output='./output/'):
+def score_collect(number_of_lists, index_string=None, name_of_repaired='4ins_Repair', path_to_output='./output/'):
     """this is a function for looping through the output folder and collect all the ddg scores
      it returns a list, of all the ddgs"""
 
@@ -31,10 +36,11 @@ def score_collect(number_of_lists, residue_dictionary=None, name_of_repaired='4i
                 # do not do anything
                 continue
             else:
-                # This is a line with scores. Sussing out which mutation this is
-                # is a little tricky. I think it will be easiest to add the scores
-                # to one long list, and then using the same (but opposite) scheme that was used for
-                # individual list generation, to figure out which mutations are where
+                # This is a line with scores. Sussing out which mutation this
+                # is a little tricky. I think it will be easiest to add the
+                # scores to one long list, and then using the same
+                # (but opposite) scheme that was used for individual list
+                # generation, to figure out which mutations are where
                 score_fields = line.split()
                 ddg = score_fields[2]
                 # since files are read from the top, and the range is specified
@@ -52,10 +58,9 @@ def score_collect(number_of_lists, residue_dictionary=None, name_of_repaired='4i
     # First let us write a header. That should contain the name of the structure
     matrix_file.write('# foldx ddg predictions on structure ' + name_of_repaired + '\n')
     # and a key for intrepreting the residue indices. This will use the residue_dictionary
-    if residue_dictionary:
+    if index_string:
         matrix_file.write('# residue index key:\n')
-        for key in residue_dictionary:
-            matrix_file.write('# {:s} is chain(s) {:s}\n'.format(residue_dictionary[key], key))
+        matrix_file.write(index_string)
     # and lastly of course the title on the coloumns.
     header_line = 'index'
     for element in 'ACDEFGHIKLMNPQRSTVWY':
@@ -72,4 +77,4 @@ def score_collect(number_of_lists, residue_dictionary=None, name_of_repaired='4i
 
     matrix_file.close()
 
-score_collect(206)
+score_collect(number_of_lists=number_of_listos, name_of_repaired=name_of_repairod, index_string=index_strong)
