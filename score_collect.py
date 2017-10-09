@@ -3,7 +3,7 @@ import sys
 
 # this function is part of wrappers_delight for foldx
 # i am going to put some things here in the beginning, so you can call it from the shell
-number_of_listos = sys.argv[1]
+number_of_listos = int(sys.argv[1])
 name_of_repairod = sys.argv[2]
 index_strong = sys.argv[3]
 
@@ -15,13 +15,16 @@ def score_collect(number_of_lists, index_string=None, name_of_repaired='4ins_Rep
     all_ddg_scores = []
     for list_number in range(1, number_of_lists):
         # each folder will contain the results for a number of runs
+        print(list_number)
         mut_number = 1
-        path_to_list = path_to_output+'individual_list'+str(list_number)+'.txt'+'/Average_'+name_of_repaired+'_'+'.fxout'
+        path_to_list = path_to_output+'individual_list'+str(list_number)+'.txt'+'/Average_'+name_of_repaired[0:-4]+'.fxout'
+        print(path_to_list)
         try:
-            average_fxout = open(path_to_output+'individual_list'+str(list_number)+'.txt'+'/Average_'+name_of_repaired+'.fxout')
+            average_fxout = open(path_to_list)
         # sometimes the last list will be empty and there will not be any output in the folder
         # This exception lets us ignore the last folder (list), in that case
         except FileNotFoundError:
+            print('file_not_found!! for list ', list_number)
             continue
 
         average_fxout_data = average_fxout.readlines()

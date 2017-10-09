@@ -4,8 +4,8 @@ import subprocess
 from pdb_parse import pdb_parse
 from individual_list_generater import individual_lister
 from repair_foldx import repair_foldx
-from score_collect import score_collect
 from sbatch_generater import sbatcher
+
 # this is the path to foldx
 foldx_path = '/groups/sbinlab/software/foldx_Jan17'
 
@@ -45,13 +45,21 @@ print('the sbatch process id is', sbatch_process_ID)
 # it is fortunate that this is the last step, this
 # makes it easy to leave as a seperate part
 
-# put a python function call inside precedurally generated python script
-#
-score_call_bash = open('./score_bash.bash', 'w')
-score_bash_string = '''#!/usr/bin/bash
-# This bash script is procedurally generated and launches the score collect python function
-python3 score_collect.py {} {} {}'''.format(total_number_of_lists, name_of_repaired, residue_index_string)
-score_call_bash.write(score_bash_string)
-score_call_bash.close()
-srun_command = 'srun --dependency=afterany:' + sbatch_process_ID + 'score_bash.bash'
-subprocess.Popen(srun_command, shell=True)
+# put a python function call inside an sbatch script
+# Sbatch script are good at waiting for other jobs to finish
+score_sbatch = open('./score.sbatch', 'w')
+score_sbatch.write('''#!/bin/sh
+#SBATCH --job-name=collect_ddgs
+#SBATCH --array=0-1
+#SBATCH --nodes=1
+#SBATCH --time=0:20:00
+#SBATCH --partition=sbinlab
+
+# This sbatch script launches the score collect python function
+python3 score_collect.py {} {} \"{}\"
+'''.format(total_number_of_lists, name_of_repaired, residue_index_string))
+
+score_sbatch.close()
+
+sbatch_score_command = 'sbatch --dependency=afterany:' + sbatch_process_ID + 'score.sbatch'
+subprocess.Popen(sbatch_score_command, shell=True)
