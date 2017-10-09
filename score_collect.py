@@ -68,6 +68,7 @@ def score_collect(number_of_lists, index_string=None, name_of_repaired='4ins_Rep
     header_line = 'index'
     for element in 'ACDEFGHIKLMNPQRSTVWY':
         header_line = header_line + '\t' + element
+    header_line += '\n'
     matrix_file.write(header_line)
 
     # this is AA number, and it will run throught the same list as we used during

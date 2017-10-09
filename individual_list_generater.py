@@ -162,7 +162,7 @@ def individual_lister(protein_chains, protein_chains_residue_number_list, hep_ho
     # in a single string.
     index_string = ''
     for key in residue_index_chain_dictionary:
-        index_string += '/#{:s} is chain(s) {:s}/n'.format(residue_index_chain_dictionary[key],
+        index_string += '#{:s} is chain(s) {:s}\n'.format(residue_index_chain_dictionary[key],
                                                            key)
     # return the number of total number of lists, and hep_hop (chain scheme)
     # and the residue_index_chain_string (for score_collect).

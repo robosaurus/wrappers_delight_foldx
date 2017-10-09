@@ -1,28 +1,32 @@
 #!/usr/bin/python3.5
 # This part should string all the functions together
+import sys
 import subprocess
 from pdb_parse import pdb_parse
 from individual_list_generater import individual_lister
 from repair_foldx import repair_foldx
 from sbatch_generater import sbatcher
 
+name_of_pdb = sys.argv[1]
+chainblocks = sys.argv[2]
+
 # this is the path to foldx
 foldx_path = '/groups/sbinlab/software/foldx_Jan17'
 
 # first use foldX to repair the pdb
 # the name of the repaired structure is saved to a variable
-name_of_repaired = repair_foldx('4ins.pdb', path_to_foldx=foldx_path)
+name_of_repaired = repair_foldx(name_of_pdb, path_to_foldx=foldx_path)
 print('repairing structure and naming it ' + name_of_repaired)
 
 # PDB_parse (including Chainselector)
-protein_chains, protein_chains_residue_numbers = pdb_parse('./4ins_Repair.pdb')
+protein_chains, protein_chains_residue_numbers = pdb_parse(name_of_repaired)
 for chain in protein_chains:
     print(chain, protein_chains[chain],
           protein_chains_residue_numbers[chain][0],
           protein_chains_residue_numbers[chain][-1])
 
 # generate mutfiles (the old format!)
-total_number_of_lists, hep_hop, residue_index_string = individual_lister(protein_chains, protein_chains_residue_numbers, hep_hop='AC_BD')
+total_number_of_lists, hep_hop, residue_index_string = individual_lister(protein_chains, protein_chains_residue_numbers, hep_hop=chainblocks)
 
 # submit the jobs to slurm
 # the best way to do this, is probably to generate an sbatch-file.
@@ -50,7 +54,7 @@ print('the sbatch process id is', sbatch_process_ID)
 score_sbatch = open('./score.sbatch', 'w')
 score_sbatch.write('''#!/bin/sh
 #SBATCH --job-name=collect_ddgs
-#SBATCH --array=0-1
+#SBATCH --array=1
 #SBATCH --nodes=1
 #SBATCH --time=0:20:00
 #SBATCH --partition=sbinlab
@@ -61,5 +65,6 @@ python3 score_collect.py {} {} \"{}\"
 
 score_sbatch.close()
 
-sbatch_score_command = 'sbatch --dependency=afterany:' + sbatch_process_ID + 'score.sbatch'
+sbatch_score_command = 'sbatch --dependency=afterany:' + sbatch_process_ID + ' score.sbatch'
+print('calling shell again', sbatch_score_command)
 subprocess.Popen(sbatch_score_command, shell=True)
