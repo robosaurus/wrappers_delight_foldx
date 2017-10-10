@@ -15,10 +15,8 @@ def score_collect(number_of_lists, index_string=None, name_of_repaired='4ins_Rep
     all_ddg_scores = []
     for list_number in range(1, number_of_lists):
         # each folder will contain the results for a number of runs
-        print(list_number)
         mut_number = 1
         path_to_list = path_to_output+'individual_list'+str(list_number)+'.txt'+'/Average_'+name_of_repaired[0:-4]+'.fxout'
-        print(path_to_list)
         try:
             average_fxout = open(path_to_list)
         # sometimes the last list will be empty and there will not be any output in the folder
