@@ -86,15 +86,16 @@ def pdb_parse(path_to_pdb):
                             residue_number
                         ]
     # and add the last residue!
-    if chainspec in protein_chains:
-        protein_chains[chainspec] += residue_letter
-        protein_chains_residue_number_list[chainspec] += [
-            residue_number
-        ]
-    else:
-        protein_chains[chainspec] = residue_letter
-        protein_chains_residue_number_list[chainspec] = [
-            residue_number
-        ]
+    if residue_number != previous_residue_number or chainspec != previous_chainspec:
+        if chainspec in protein_chains:
+            protein_chains[chainspec] += residue_letter
+            protein_chains_residue_number_list[chainspec] += [
+                residue_number
+            ]
+        else:
+            protein_chains[chainspec] = residue_letter
+            protein_chains_residue_number_list[chainspec] = [
+                residue_number
+            ]
 
     return protein_chains, protein_chains_residue_number_list
