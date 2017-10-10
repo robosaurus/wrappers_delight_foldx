@@ -72,7 +72,7 @@ def score_collect(number_of_lists, index_string=None, name_of_repaired='4ins_Rep
     # this is AA number, and it will run throught the same list as we used during
     # individual list generation
     ddg_line = '{:.4f}\t'*20 + '\n'
-    for residuenumber in range(1, number_of_residues):
+    for residuenumber in range(1, number_of_residues + 1):
         start_index = (residuenumber * 20) - 20
         end_index = (residuenumber*20)
         matrix_file.write(str(residuenumber) + '\t' + ddg_line.format(*all_ddg_scores[start_index:end_index]))
