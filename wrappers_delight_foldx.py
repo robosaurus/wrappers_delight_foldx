@@ -17,7 +17,6 @@
 
 import sys
 import subprocess
-import random
 from pdb_parse import pdb_parse
 from individual_list_generater import individual_lister
 from repair_foldx import repair_foldx
@@ -70,7 +69,6 @@ print('the sbatch process id is', sbatch_process_ID)
 # put a python function call inside an sbatch script
 # Sbatch script are good at waiting for other jobs to finish
 # also since this is the last step, we will do some cleanup at the end
-random_number = random.randint(1, 10000)
 
 score_sbatch = open('./score.sbatch', 'w')
 score_sbatch.write('''#!/bin/sh
@@ -84,10 +82,11 @@ score_sbatch.write('''#!/bin/sh
 python3 {}score_collect.py {} {} \"{}\"
 
 # this part is for cleaning up, let's put everything in a nice tarball
-tar -czf output_and_temp_files{}.tar.gz slurm* score.sbatch {} {} {}.fxout --remove-files
-'''.format(location_of_wrapper, total_number_of_lists, name_of_repaired, residue_index_string, sbatch_process_ID, random_number, name_of_repaired, name_of_repaired[0:-4], name_of_sbatch_file))
+tar -czf output_and_temp_files{}.tar.gz slurm* score.sbatch foldx_saturation_mutagenesis.sbatch {} {} {}.fxout output/ individual_lists/ --remove-files
+'''.format(location_of_wrapper, total_number_of_lists, name_of_repaired, residue_index_string, sbatch_process_ID, sbatch_process_ID, name_of_repaired, name_of_repaired[0:-4]))
 
 score_sbatch.close()
 
 sbatch_score_command = 'sbatch --dependency=afterany:' + sbatch_process_ID + ' score.sbatch'
 subprocess.Popen(sbatch_score_command, shell=True)
+print('')

@@ -150,7 +150,7 @@ def individual_lister(protein_chains, protein_chains_residue_number_list, hep_ho
     # make a dictionary that informs score_collect.py of the indices and chains relations
     # this dictionary will have a block as key, and a residue length as value
     residue_index_chain_dictionary = {}
-    block_index_start = 1
+    block_index_start = 0
     block_index_end = 0
     for block in hep_hop.split('_'):
         block_index_end = block_index_start + len(mutation_dictionary[block[0]]) / 20
