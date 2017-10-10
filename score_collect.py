@@ -55,7 +55,7 @@ def score_collect(number_of_lists, index_string=None, name_of_repaired='4ins_Rep
     number_of_residues = int(len(all_ddg_scores)/20)
     print('number of residues is', number_of_residues)
     # now we build the output matrix
-    matrix_file = open('./' + name_of_repaired[0:-12] + '_foldx.ddgs', 'w')
+    matrix_file = open('./' + name_of_repaired[0:-11] + '_foldx.ddgs', 'w')
     # First let us write a header. That should contain the name of the structure
     matrix_file.write('# foldx ddg predictions on structure ' + name_of_repaired + '\n')
     # and a key for intrepreting the residue indices. This will use the residue_dictionary
