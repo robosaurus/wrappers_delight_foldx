@@ -20,7 +20,7 @@ def sbatcher(repaired_pdb, path_to_foldx='/groups/sbinlab/software/foldx_Jan17')
     sbatch = open('./foldx_saturation_mutagenesis.sbatch', 'w')
     sbatch.write('''#!/bin/sh
 #SBATCH --job-name=foldx_ddg_saturation
-#SBATCH --array=0-{}
+#SBATCH --array=0-{}%256
 #SBATCH --nodes=1
 #SBATCH --time=5:00:00
 #SBATCH --partition=sbinlab
