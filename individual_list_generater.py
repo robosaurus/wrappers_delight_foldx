@@ -154,8 +154,8 @@ def individual_lister(protein_chains, protein_chains_residue_number_list, hep_ho
     block_index_end = 0
     for block in hep_hop.split('_'):
         block_index_end = block_index_start + len(mutation_dictionary[block[0]]) / 20
-        residue_index_chain_dictionary[block] = '{} to {}'.format(block_index_start,
-                                                                  block_index_end)
+        residue_index_chain_dictionary[block] = '{} through {}'.format(block_index_start + 1,
+                                                                  block_index_end - 1)
         block_index_start = block_index_end
 
     # since this information will be passed through a bash script, lets put it
