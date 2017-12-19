@@ -103,6 +103,5 @@ def pdb_parse(path_to_pdb):
 
 # this last part is just so you can call it from the shell
 import sys
-
 prochains, reslist = pdb_parse(sys.argv[1])
-print prochains
+print(prochains)
