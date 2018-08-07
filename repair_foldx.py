@@ -1,7 +1,7 @@
 #!/usr/bin.python3.5
 import subprocess
 
-def repair_foldx(pdb_name, path_to_foldx='/groups/sbinlab/software/foldx_Jan17/'):
+def repair_foldx(pdb_name, path_to_foldx='/groups/sbinlab/software/foldx_May18/'):
     foldx_path = path_to_foldx
     # let us put the subprocess call in a string
     # watch the spaces!
