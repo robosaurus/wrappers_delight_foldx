@@ -30,7 +30,7 @@ location_of_wrapper = sys.argv[0][0:-25]
 
 
 # this is the path to foldx
-foldx_path = '/groups/sbinlab/software/foldx_Jan17'
+foldx_path = '/groups/sbinlab/software/foldx_May18'
 
 # first use foldX to repair the pdb
 # the name of the repaired structure is saved to a variable
