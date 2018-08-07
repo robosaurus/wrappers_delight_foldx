@@ -1,7 +1,7 @@
 #!/usr/bin/python
 import os
 
-def sbatcher(repaired_pdb, path_to_foldx='/groups/sbinlab/software/foldx_Jan17'):
+def sbatcher(repaired_pdb, path_to_foldx='/groups/sbinlab/software/foldx_May18'):
     ''' as a part of foldx saturation mutagenisis, this function makes an
     sbatch file suitable for submission to slurm. It is dependent on the
     presence of a repaired PDB structure (from foldx repair pdb), and
