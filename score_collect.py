@@ -23,6 +23,10 @@ def score_collect(number_of_lists, index_string=None, name_of_repaired='4ins_Rep
         # This exception lets us ignore the last folder (list), in that case
         except FileNotFoundError:
             print('file_not_found!! for list ', list_number)
+            error_file = open('IMPORTANT_error_file.txt', 'a')
+            error_file.write('WRAPPER FAILED - do not trust any of the results')
+            error_file.write('Failure on list ', list_number)
+            error_file.close()
             continue
 
         average_fxout_data = average_fxout.readlines()
