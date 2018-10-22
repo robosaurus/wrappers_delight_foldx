@@ -5,7 +5,9 @@ import sys
 # i am going to put some things here in the beginning, so you can call it from the shell
 number_of_listos = int(sys.argv[1])
 name_of_repairod = sys.argv[2]
-index_strong = sys.argv[3]
+
+# we dropped the index string.
+#index_strong = sys.argv[3]
 
 def score_collect(number_of_lists, index_string=None, name_of_repaired='4ins_Repair', path_to_output='./output/'):
     """this is a function for looping through the output folder and collect all the ddg scores
