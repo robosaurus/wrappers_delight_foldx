@@ -1,5 +1,5 @@
 #! /usr/bin/env python3
-
+import sys
 
 def pdb_parse(path_to_pdb):
     # this is the PDB parse function. It should take a PDB file as input
@@ -102,6 +102,6 @@ def pdb_parse(path_to_pdb):
 
 
 # this last part is just so you can call it from the shell
-import sys
-prochains, reslist = pdb_parse(sys.argv[1])
-print(prochains)
+if __name__ == '__main__':
+    prochains, reslist = pdb_parse(sys.argv[1])
+    print(prochains)
